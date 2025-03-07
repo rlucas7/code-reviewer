@@ -1,4 +1,4 @@
-from collections2.add import add
+from reviewer.add import add
 
 import pytest
 
