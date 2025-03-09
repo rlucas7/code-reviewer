@@ -1,6 +1,30 @@
-# collections2
-A simple package to test out the release notes from drafter github action 
+# Reviewer
+A bunch of code to make code reviews.
 
+## pip installs
+
+NOTE: these will go into a dependencies file once they stabilize a bit
+
+If you want the env isolated then make a venv
+```bash
+pip install PyGithub
+pip install --upgrade google-cloud-aiplatform
+# actually the console says to use this latter one, not sure if we need both here?
+pip install --upgrade google-genai
+```
+
+## Configuration
+
+The file `example_codeconfig.ini` contains the structure of the config file.
+To use the package you need to configure an actual configuration file by changing
+this file via
+
+```bash
+mv example_codeconfig.ini codeconfig.ini
+```
+
+and then use your text editor to put in the necessary values.
+Note that the package assumes the file is in this location at the repo root.
 
 # editable install
 
