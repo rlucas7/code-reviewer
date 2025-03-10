@@ -3,14 +3,20 @@ A bunch of code to make code reviews.
 
 ## pip installs
 
-NOTE: these will go into a dependencies file once they stabilize a bit
+The runtime dependencies file is `requirements.txt`.
+The dev dependencies file is `dev-requirements.txt`.
+The latter contains a dependencies for packaging as well as testing, etc.
 
-If you want the env isolated then make a venv
+For the runtime env setup do:
 ```bash
-pip install PyGithub
-pip install --upgrade google-cloud-aiplatform
-# actually the console says to use this latter one, not sure if we need both here?
-pip install --upgrade google-genai
+python3 -m venv .
+. bin/activate
+python3 -m pip install -r requirements.txt
+```
+
+If you also want to develop do:
+```bash
+python3 -m pip install -r dev-requirements.txt
 ```
 
 ## Configuration
