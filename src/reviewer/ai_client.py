@@ -5,6 +5,9 @@ from google import genai
 from google.genai import types # type: ignore
 from pydantic import BaseModel # type: ignore
 
+# system prompt and dialog prompt
+from prompts.prompts import si_text1, text1
+
 # NOTE: in practice these come from a pull request/change set
 patches = """
 --- /dev/null
@@ -32,44 +35,9 @@ patches = """
 +
 """
 
-text1 = types.Part.from_text(text=f"""A pull request is made on a code repository with the following changes:
+text1 = types.Part.from_text(text=text1.format(patches))
 
-```
-{patches}
-```
-
-Your task is to review this code and make a suggested edit to the code that is in patch form.
-The patch should be directly applicable to the repository via a `git apply` command,
-and *must* pass `git apply --check` without errors.
-If these are new files being added, the patch should *only* contain
-`--- /dev/null` and `+++ b/filename` lines for each file.
-Do *not* include `--- a/filename` lines in the patch, as this will cause `git apply` to fail.
-Make absolutely sure the patch format is correct.
-Double check your patch to ensure it conforms to the expected format for new files.
-For example, a valid patch for a new file would look like this:
-
-```diff
---- /dev/null
-+++ b/new_file.py
-@@ -0,0 +1,1 @@
-+print(\"Hello, world!\")
-```""")
-
-# this is the system prompt:
-# We can inject the `commit_id` into the system prompt here and the `path`
-si_text1 = """You are a software developer trying to improve your colleagues code through a code review.
-Please provide any comments with code changes in the form of suggestions via a json blob like this
-{ \"body\":\"```suggestion\\n<some blob of code changes here>\\n```\\n the function should have a docstring\",
-  \"commit_id\":\"90b82e3b2a91bb3f9f88a2ac4ca33d557027d71a\",
-  \"path\":\"<filepath>\",
-  \"start_line\":1,
-  \"start_side\":\"RIGHT\",
-  \"line\":2,
-  \"side\":
-  \"RIGHT\"
-}.
-Note that the \"line\" value must be greater than the \"start_line\" value.
-"""
+print(text1)
 
 class Suggestion(BaseModel):
     body: str
